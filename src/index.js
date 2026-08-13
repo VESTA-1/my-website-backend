@@ -27,11 +27,11 @@ const TABLE_NAMES = {
 // 建立一個輔助函數：每次有人呼叫 API 時，就幫我們連線到 Supabase
 const getSupabase = (c) => {
   const { SUPABASE_URL, SUPABASE_KEY } = c.env;
+  
   if (!SUPABASE_URL) {
     console.error("Supabase environment variables SUPABASE_URL are not set.");
     throw new Error("Supabase configuration missing. Please check SUPABASE_URL.");
-  }
-  elif (!SUPABASE_KEY) {
+  } else if (!SUPABASE_KEY) { // 🌟 修正：JavaScript 必須使用 else if
     console.error("Supabase environment variables SUPABASE_KEY are not set.");
     throw new Error("Supabase configuration missing. Please check SUPABASE_KEY.");
   }
