@@ -13,7 +13,7 @@ app.get('/', (c) => {
     message: '歡迎來到我的個人網站後端 API！',
     endpoints: [
       '/api/profile',
-      '/api/projects'
+      '/api/project'
     ]
   });
 });
