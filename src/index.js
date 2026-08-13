@@ -13,7 +13,7 @@ app.get('/', (c) => {
     message: '歡迎來到我的個人網站後端 API！',
     endpoints: [
       '/api/profile',
-      '/api/project'
+      '/api/projects'
     ]
   });
 });
@@ -21,17 +21,19 @@ app.get('/', (c) => {
 // 定義資料表名稱為常數，提高可維護性
 const TABLE_NAMES = {
   PROFILE: 'profile',
-  PROJECT: 'project',
+  PROJECT: 'projects',
 };
 
 // 建立一個輔助函數：每次有人呼叫 API 時，就幫我們連線到 Supabase
 const getSupabase = (c) => {
-  const { SUPABASE_URL, SUPABASE_KEY } = c.env;
+
+  const SUPABASE_URL = c.env?.SUPABASE_URL || process.env.SUPABASE_URL;
+    const SUPABASE_KEY = c.env?.SUPABASE_KEY || process.env.SUPABASE_KEY;
   
   if (!SUPABASE_URL) {
     console.error("Supabase environment variables SUPABASE_URL are not set.");
     throw new Error("Supabase configuration missing. Please check SUPABASE_URL.");
-  } else if (!SUPABASE_KEY) { // 🌟 修正：JavaScript 必須使用 else if
+  } else if (!SUPABASE_KEY) {
     console.error("Supabase environment variables SUPABASE_KEY are not set.");
     throw new Error("Supabase configuration missing. Please check SUPABASE_KEY.");
   }
@@ -45,7 +47,6 @@ app.get('/api/profile', async (c) => {
     const supabase = getSupabase(c);
     const { data, error } = await supabase.from(TABLE_NAMES.PROFILE).select('*').single();
     
-    if (error) throw error;
     return c.json(data || null);
   } catch (err) {
     return c.json({ error: err.message || "Failed to fetch profile data." }, 500);
@@ -53,7 +54,7 @@ app.get('/api/profile', async (c) => {
 });
 
 // 🌟 API 2：獲取專案列表
-app.get('/api/project', async (c) => {
+app.get('/api/projects', async (c) => {
   try {
     const supabase = getSupabase(c);
     const { data, error } = await supabase.from(TABLE_NAMES.PROJECT).select('*');
