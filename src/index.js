@@ -21,7 +21,7 @@ app.get('/', (c) => {
 // 定義資料表名稱為常數，提高可維護性
 const TABLE_NAMES = {
   PROFILE: 'profile',
-  PROJECTS: 'projects',
+  PROJECT: 'project',
 };
 
 // 建立一個輔助函數：每次有人呼叫 API 時，就幫我們連線到 Supabase
@@ -49,10 +49,10 @@ app.get('/api/profile', async (c) => {
 });
 
 // 🌟 API 2：獲取專案列表
-app.get('/api/projects', async (c) => {
+app.get('/api/project', async (c) => {
   try {
     const supabase = getSupabase(c);
-    const { data, error } = await supabase.from(TABLE_NAMES.PROJECTS).select('*');
+    const { data, error } = await supabase.from(TABLE_NAMES.PROJECT).select('*');
     
     if (error) throw error;
     return c.json(data || []);
