@@ -7,6 +7,9 @@
 	"name": "my-website-backend",
 	"main": "src/index.js",
 	"compatibility_date": "2026-04-29",
+	"vars": {
+    "SUPABASE_URL": "https://vevmhvuimgaqjohnzksw.supabase.co"
+  	},
 	"observability": {
 		"enabled": true
 	},
